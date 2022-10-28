@@ -41,7 +41,14 @@ const App = {
 
   // Implement Task 4 Modify the front end of the DAPP
   lookUp: async function (){
-    
+    // get the method from the ABI
+    const { lookUptokenIdToStarInfo } = this.meta.methods;
+    // get the tokenId to lookup from the form
+    const lookId = document.getElementById("lookid").value;
+    // call the contract view method and await
+    let starName = await lookUptokenIdToStarInfo(lookId).call();
+    // display the name
+    App.setStatus("Star Name is " + starName);
   }
 
 };

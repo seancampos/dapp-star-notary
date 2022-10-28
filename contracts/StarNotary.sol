@@ -74,7 +74,7 @@ contract StarNotary is ERC721 {
         address token2Owner = ownerOf(_tokenId2);
         require(((token1Owner == msg.sender) || (token2Owner == msg.sender)), "Sender does not own either token");
         //4. Use _transferFrom function to exchange the tokens.
-        // Note that _transferFrom is not in ERC721 anymore so using _transfer instead
+        // Note that _transferFrom is not in openzeppelin ERC721 anymore so using _transfer instead
         _transfer(token1Owner, token2Owner, _tokenId1);
         _transfer(token2Owner, token1Owner, _tokenId2);
     }
