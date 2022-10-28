@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 pragma solidity >=0.4.24;
 
 //Importing openzeppelin-solidity ERC-721 implemented Standard
@@ -23,7 +24,6 @@ contract StarNotary is ERC721 {
     mapping(uint256 => uint256) public starsForSale;
 
 
-    
     // Create Star using the Struct
     function createStar(string memory _name, uint256 _tokenId) public { // Passing the name and tokenId as a parameters
         Star memory newStar = Star(_name); // Star is an struct so we are creating a new Star
@@ -60,6 +60,7 @@ contract StarNotary is ERC721 {
     function lookUptokenIdToStarInfo (uint _tokenId) public view returns (string memory) {
         //1. You should return the Star saved in tokenIdToStarInfo mapping
         Star memory lookupStar = tokenIdToStarInfo[_tokenId];
+        // checking to see if mapping is not empty by checking if the string length is 0
         require(bytes(lookupStar.name).length != 0, "Star does not exist");
         return lookupStar.name;
     }
@@ -69,21 +70,21 @@ contract StarNotary is ERC721 {
         //1. Passing to star tokenId you will need to check if the owner of _tokenId1 or _tokenId2 is the sender
         //2. You don't have to check for the price of the token (star)
         //3. Get the owner of the two tokens (ownerOf(_tokenId1), ownerOf(_tokenId2)
-        //4. Use _transferFrom function to exchange the tokens.
         address token1Owner = ownerOf(_tokenId1);
         address token2Owner = ownerOf(_tokenId2);
         require(((token1Owner == msg.sender) || (token2Owner == msg.sender)), "Sender does not own either token");
+        //4. Use _transferFrom function to exchange the tokens.
+        // Note that _transferFrom is not in ERC721 anymore so using _transfer instead
         _transfer(token1Owner, token2Owner, _tokenId1);
         _transfer(token2Owner, token1Owner, _tokenId2);
-
     }
 
     // Implement Task 1 Transfer Stars
     function transferStar(address _to1, uint256 _tokenId) public {
         //1. Check if the sender is the ownerOf(_tokenId)
-        //2. Use the transferFrom(from, to, tokenId); function to transfer the Star
         address tokenOwner = ownerOf(_tokenId);
         require((msg.sender == tokenOwner), "Token owner is not sender");
+        //2. Use the transferFrom(from, to, tokenId); function to transfer the Star
         transferFrom(tokenOwner, _to1, _tokenId);
     }
 
