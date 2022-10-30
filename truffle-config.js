@@ -22,12 +22,12 @@
  *
  */
 
-// const HDWallet = require('truffle-hdwallet-provider');
-// const infuraKey = "fj4jll3k.....";
+const HDWallet = require('truffle-hdwallet-provider');
+const infuraKey = process.env["infuraKey"];
 //
 // const fs = require('fs');
 // const mnemonic = fs.readFileSync(".secret").toString().trim();
-
+const mnemonic = process.env["memonic"];
 module.exports = {
   /**
    * Networks define how you connect to your ethereum client and let you set the
@@ -51,6 +51,14 @@ module.exports = {
       port: 9545,            // Standard Ethereum port (default: none)
       network_id: "*",       // Any network (default: none)
     },
+
+    goerli: {
+      provider: () => new HDWallet(mnemonic, 'https://goerli.infura.io/v3/'+ infuraKey),
+      network_id: 5,
+      networkCheckTimeout: 99999,
+      // gas: 4465030,
+      gasPrice: 10000000000,
+    }
 
     // Another network with more advanced options...
     // advanced: {
