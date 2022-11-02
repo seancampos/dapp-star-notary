@@ -23,11 +23,11 @@
  */
 
 const HDWallet = require('truffle-hdwallet-provider');
-const infuraKey = process.env["infuraKey"];
+const infuraKey = process.env.infuraKey;
 //
 // const fs = require('fs');
 // const mnemonic = fs.readFileSync(".secret").toString().trim();
-const mnemonic = process.env["memonic"];
+const mnemonic = process.env.memonic;
 module.exports = {
   /**
    * Networks define how you connect to your ethereum client and let you set the
